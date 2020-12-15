@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>966</width>
+    <width>1104</width>
     <height>399</height>
    </rect>
   </property>
@@ -18,7 +18,10 @@
     <normaloff>:/新前缀/title.ico</normaloff>:/新前缀/title.ico</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">#textEdit_3,#textEdit_4,#textEdit_5,#textEdit_6{
+   <string notr="true">#textEdit_3,#textEdit_4,#textEdit_5,#textEdit_6,#textBrowser{
+	background-color: rgb(217, 217, 217);
+}
+#tableWidget{
 	background-color: rgb(217, 217, 217);
 }</string>
   </property>
@@ -102,11 +105,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QTextEdit" name="textEdit_3">
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
+          <widget class="QTextEdit" name="textEdit_3"/>
          </item>
         </layout>
        </widget>
@@ -177,6 +176,24 @@
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_7">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>日志</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <widget class="QTextBrowser" name="textBrowser"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -196,7 +213,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_8">
       <property name="spacing">
-       <number>0</number>
+       <number>20</number>
       </property>
       <property name="leftMargin">
        <number>20</number>
@@ -211,14 +228,58 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QRadioButton" name="radioButton_in">
         <property name="text">
-         <string>筛选条件规则，开头筛选：关键词*；结尾筛选：*关键词；包含筛选：*关键词*；等于筛选：关键词；</string>
+         <string>包含</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QRadioButton" name="radioButton_start">
+        <property name="text">
+         <string>开头</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_end">
+        <property name="text">
+         <string>结尾</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_be">
+        <property name="text">
+         <string>等于</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>输出日志</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_condition">
         <property name="minimumSize">
          <size>
           <width>80</width>
@@ -232,7 +293,26 @@
          </size>
         </property>
         <property name="text">
-         <string>筛  选</string>
+         <string>条件筛选</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_chinese">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>汉字筛选</string>
         </property>
        </widget>
       </item>
