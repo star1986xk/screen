@@ -5,6 +5,7 @@ import chardet
 from UI.ui_win import Ui_Form
 from PyQt5.QtWidgets import QApplication, QFrame, QMessageBox, QFileDialog
 from rsa_class import rsa_class
+from mylogclass import MyLogClass
 
 
 class MainWindow(QFrame, Ui_Form):
@@ -28,6 +29,8 @@ class MainWindow(QFrame, Ui_Form):
         self.datas = []
         self.var_1()
         self.var_2()
+
+        self.mylog = MyLogClass()
 
     def var_1(self):
         self.textBrowser.clear()
@@ -57,16 +60,17 @@ class MainWindow(QFrame, Ui_Form):
         text_list = [li.strip().lower() for li in self.textEdit.toPlainText().split('\n') if li.strip()]  # type:list
         condition_list = [li.strip().lower() for li in self.textEdit_2.toPlainText().split('\n') if
                           li.strip()]  # type:list
-        condition_list = list(map(self.condition_create, condition_list))  # type:list
         self.parser_condition(text_list, condition_list, 1)
 
     def run_condition_2(self):
-        if not self.datas or not self.textEdit_2.toPlainText(): return
-        self.var_1()
-        condition_list = [li.strip().lower() for li in self.textEdit_2.toPlainText().split('\n') if
-                          li.strip()]  # type:list
-        condition_list = list(map(self.condition_create, condition_list))  # type:list
-        self.parser_condition(self.datas, condition_list, 0)
+        try:
+            if not self.datas or not self.textEdit_2.toPlainText(): return
+            self.var_1()
+            condition_list = [li.strip().lower() for li in self.textEdit_2.toPlainText().split('\n') if
+                              li.strip()]  # type:list
+            self.parser_condition(self.datas, condition_list, 0)
+        except Exception as e:
+            self.mylog.logger.warning('run_condition_2:' + str(e))
 
     def run_chinese(self):
         if not self.textEdit.toPlainText(): return
@@ -79,44 +83,45 @@ class MainWindow(QFrame, Ui_Form):
         self.var_2()
         self.parser_chinese(self.datas, 0)
 
-    def condition_create(self, word):
-        if self.radioButton_in.isChecked():
-            condition = '.*?' + word + '.*?'
-        elif self.radioButton_start.isChecked():
-            condition = '^' + word + '.*?'
-        elif self.radioButton_end.isChecked():
-            condition = '.*?' + word + '$'
-        else:
-            condition = '^' + word + '$'
-        return condition, word
-
     def condition_parser(self, word, condition_list):
-        for c, w in condition_list:
-            if re.search(c, word):
-                return w
+        for c in condition_list:
+            if self.radioButton_in.isChecked() and c in word:
+                return c
+            elif self.radioButton_start.isChecked() and len(word) >= len(c) and c == word[:len(c)]:
+                return c
+            elif self.radioButton_end.isChecked() and len(word) >= len(c) and c == word[-len(c):]:
+                return c
+            elif self.radioButton_be.isChecked() and word == c:
+                return  c
         return None
 
     def parser_condition(self, text_list, condition_list, tpye):
-        for word in text_list:
-            c = self.condition_parser(word, condition_list)
-            if c:
-                self.result_true.append([word, c])
-                if self.checkBox.isChecked():
-                    self.textBrowser.append(word + '---' + c)
+        try:
+            for word in text_list:
+                c = self.condition_parser(word, condition_list)
+                if c:
+                    self.result_true.append([word, c])
+                    if self.checkBox.isChecked():
+                        self.textBrowser.append(word + '---' + c)
+                else:
+                    self.result_false.append(word)
+            if tpye:
+                self.textEdit_3.setText('\n'.join([li[0] for li in self.result_true]))
+                self.textEdit_4.setText('\n'.join(self.result_false))
             else:
-                self.result_false.append(word)
-        if tpye:
-            self.textEdit_3.setText('\n'.join([li[0] for li in self.result_true]))
-            self.textEdit_4.setText('\n'.join(self.result_false))
-        else:
-            self.out_txt('./符合结果.txt', [li[0] for li in self.result_true])
-            self.out_txt('./不符合结果.txt', self.result_false)
-        QMessageBox.information(self, '提示', '完成')
+                self.out_txt('./符合结果.txt', [li[0] for li in self.result_true])
+                self.out_txt('./不符合结果.txt', self.result_false)
+            QMessageBox.information(self, '提示', '完成')
+        except Exception as e:
+            self.mylog.logger.warning('parser_condition:' + str(e))
 
     # 导出
     def out_txt(self, filename, txt_list):
-        with open(filename, 'w') as f:
-            f.write('\n'.join(txt_list))
+        try:
+            with open(filename, 'w') as f:
+                f.write('\n'.join(txt_list))
+        except Exception as e:
+            self.mylog.logger.warning('out_txt:' + str(e))
 
     # 检测编码格式，读取内容
     def read(self, path):
