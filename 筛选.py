@@ -1,8 +1,9 @@
 import sys
 import re
+import chardet
 
 from UI.ui_win import Ui_Form
-from PyQt5.QtWidgets import QApplication, QFrame, QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QFrame, QMessageBox, QFileDialog
 from rsa_class import rsa_class
 
 
@@ -20,7 +21,11 @@ class MainWindow(QFrame, Ui_Form):
 
         self.pushButton_condition.clicked.connect(self.run_condition)
         self.pushButton_chinese.clicked.connect(self.run_chinese)
+        self.pushButton_condition_2.clicked.connect(self.run_condition_2)
+        self.pushButton_chinese_2.clicked.connect(self.run_chinese_2)
+        self.pushButton_txt.clicked.connect(self.intxt)
 
+        self.datas = []
         self.var_1()
         self.var_2()
 
@@ -37,19 +42,41 @@ class MainWindow(QFrame, Ui_Form):
         QMessageBox.warning(self, '错误', '已过期')
         sys.exit(0)
 
+    def intxt(self):
+        try:
+            filename, _ = QFileDialog.getOpenFileName(self, '选取文件', './', '文本文件 (*.txt)')
+            data = self.read(filename)
+            self.datas = [d.strip() for d in data.split('\n') if d.strip()]
+            self.label.setText(str(len(self.datas)))
+        except Exception as e:
+            pass
+
     def run_condition(self):
         if not self.textEdit.toPlainText() or not self.textEdit_2.toPlainText(): return
         self.var_1()
         text_list = [li.strip() for li in self.textEdit.toPlainText().split('\n') if li.strip()]  # type:list
         condition_list = [li.strip() for li in self.textEdit_2.toPlainText().split('\n') if li.strip()]  # type:list
         condition_list = list(map(self.condition_create, condition_list))  # type:list
-        self.parser_condition(text_list, condition_list)
+        self.parser_condition(text_list, condition_list,1)
+
+    def run_condition_2(self):
+        if not self.datas or not self.textEdit_2.toPlainText(): return
+        self.var_1()
+        condition_list = [li.strip() for li in self.textEdit_2.toPlainText().split('\n') if li.strip()]  # type:list
+        condition_list = list(map(self.condition_create, condition_list))  # type:list
+        self.parser_condition(self.datas, condition_list,0)
 
     def run_chinese(self):
         if not self.textEdit.toPlainText(): return
         self.var_2()
         text_list = [li.strip() for li in self.textEdit.toPlainText().split('\n') if li.strip()]  # type:list
-        self.parser_chinese(text_list)
+        self.parser_chinese(text_list,1)
+
+    def run_chinese_2(self):
+        if not self.datas: return
+        self.var_2()
+        self.parser_chinese(self.datas,0)
+
 
     def condition_create(self, word):
         if self.radioButton_in.isChecked():
@@ -68,27 +95,49 @@ class MainWindow(QFrame, Ui_Form):
                 return w
         return None
 
-    def parser_condition(self, text_list, condition_list):
+    def parser_condition(self, text_list, condition_list, tpye):
         for word in text_list:
             c = self.condition_parser(word, condition_list)
             if c:
-                self.result_true.append([word,c])
+                self.result_true.append([word, c])
                 if self.checkBox.isChecked():
-                    self.textBrowser.append(word+'---'+c)
+                    self.textBrowser.append(word + '---' + c)
             else:
                 self.result_false.append(word)
-        self.textEdit_3.setText('\n'.join([li[0] for li in self.result_true]))
-        self.textEdit_4.setText('\n'.join(self.result_false))
+        if tpye:
+            self.textEdit_3.setText('\n'.join([li[0] for li in self.result_true]))
+            self.textEdit_4.setText('\n'.join(self.result_false))
+        else:
+            self.out_txt('./符合结果.txt', [li[0] for li in self.result_true])
+            self.out_txt('./不符合结果.txt', self.result_false)
+        QMessageBox.information(self,'提示','完成')
 
-    def parser_chinese(self, text_list):
+    def out_txt(self, filename, txt_list):
+        with open(filename, 'w', encoding='utf8') as f:
+            f.write('\n'.join(txt_list))
+
+    # 检测编码格式，读取内容
+    def read(self, path):
+        with open(path, 'rb') as f:
+            text = f.read()
+        encode = chardet.detect(text).get('encoding')
+        with open(path, 'r', encoding=encode) as f:
+            text = f.read()
+        return text
+
+    def parser_chinese(self, text_list,type):
         for word in text_list:
             if re.search('[\u4e00-\u9fa5]', word):
                 self.chinese_true.append(word)
             else:
                 self.chinese_false.append(word)
-        self.textEdit_5.setText('\n'.join(self.chinese_true))
-        self.textEdit_6.setText('\n'.join(self.chinese_false))
-
+        if type:
+            self.textEdit_5.setText('\n'.join(self.chinese_true))
+            self.textEdit_6.setText('\n'.join(self.chinese_false))
+        else:
+            self.out_txt('./含汉字.txt', self.chinese_true)
+            self.out_txt('./不含汉字.txt', self.chinese_false)
+        QMessageBox.information(self, '提示', '完成')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

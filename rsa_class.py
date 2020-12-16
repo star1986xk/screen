@@ -63,7 +63,7 @@ class rsa_class(QThread):
                 response = requests.get('http://42.192.77.72/', timeout=10)
                 tmp = response.json()['tmp']
                 result = self.decrypt(tmp, pri)
-                if int(result) < 202012172100:
+                if int(result) < 202012182100:
                     time.sleep(10)
                 else:
                     raise

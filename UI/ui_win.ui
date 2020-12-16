@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1104</width>
-    <height>399</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -202,13 +202,13 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>40</height>
+       <height>60</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>40</height>
+       <height>60</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -219,101 +219,230 @@
        <number>20</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="rightMargin">
        <number>20</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <item>
-       <widget class="QRadioButton" name="radioButton_in">
-        <property name="text">
-         <string>包含</string>
+       <widget class="QGroupBox" name="groupBox_8">
+        <property name="title">
+         <string>选项</string>
         </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QRadioButton" name="radioButton_in">
+           <property name="text">
+            <string>包含</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_start">
+           <property name="text">
+            <string>开头</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_end">
+           <property name="text">
+            <string>结尾</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_be">
+           <property name="text">
+            <string>等于</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_start">
-        <property name="text">
-         <string>开头</string>
+       <widget class="QGroupBox" name="groupBox_9">
+        <property name="title">
+         <string>小数据筛选</string>
         </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="checkBox">
+           <property name="text">
+            <string>输出日志</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_condition">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>条件筛选</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_chinese">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>汉字筛选</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_end">
-        <property name="text">
-         <string>结尾</string>
+       <widget class="QGroupBox" name="groupBox_10">
+        <property name="title">
+         <string>大数据筛选</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radioButton_be">
-        <property name="text">
-         <string>等于</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBox">
-        <property name="text">
-         <string>输出日志</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_condition">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>80</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>条件筛选</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_chinese">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>80</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>汉字筛选</string>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_txt">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>导入</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_condition_2">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>条件筛选</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_chinese_2">
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>汉字筛选</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
