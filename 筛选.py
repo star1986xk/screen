@@ -113,6 +113,7 @@ class MainWindow(QFrame, Ui_Form):
             self.out_txt('./不符合结果.txt', self.result_false)
         QMessageBox.information(self, '提示', '完成')
 
+    # 导出
     def out_txt(self, filename, txt_list):
         with open(filename, 'w') as f:
             f.write('\n'.join(txt_list))
